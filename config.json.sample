@@ -1,3 +1,4 @@
 {
-	"group": 759
+	"group": 759,
+    "container": "jupyter/datascience-notebook:lab-2.1.1"
 }

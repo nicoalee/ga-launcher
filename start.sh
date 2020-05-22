@@ -4,6 +4,17 @@ set -e
 set -x
 
 group_id=$(jq -r .group config.json)
+container=$(jq -r .container config.json)
+
+#validate container name
+case "$container" in
+jupyter/datascience-notebook:lab-2.1.1)
+    echo "accepted"
+    ;;
+*)
+    echo "invalid container"
+    exit 1
+esac
 
 echo "finding open port"
 port=$(./find_open_port.py)
@@ -42,7 +53,7 @@ docker run \
     -v `pwd`/work:/home/jovyan/work \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     -p $port:8080 \
-    -d jupyter/datascience-notebook:lab-2.1.1 > container.id
+    -d $container > container.id
 
 cat <<EOF > container.json
 {
