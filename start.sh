@@ -42,15 +42,15 @@ c.NotebookApp.tornado_settings = {
 }
 EOF
 
-mkdir -p work
-chmod 777 work
+mkdir -p home
+chmod 777 home
 
 echo "starting container"
 #--network host \
 docker run \
     --restart=always \
-    -v /mnt/secondary/$group_id:/home/jovyan/data:ro \
-    -v `pwd`/work:/home/jovyan/work \
+    -v /mnt/secondary/$group_id:/home/jovyan/input:ro \
+    -v `pwd`/home:/home/jovyan \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     -p $port:8080 \
     -d $container > container.id
