@@ -45,11 +45,16 @@ EOF
 mkdir -p home
 chmod 777 home
 
+input_mount=""
+if [ -d /mnt/secondary/$group_id ]; then
+    input_mount="-v /mnt/secondary/$group_id:/home/jovyan/input:ro"
+fi
+
 echo "starting container"
 #--network host \
 docker run \
     --restart=always \
-    -v /mnt/secondary/$group_id:/home/jovyan/input:ro \
+    $input_mount \
     -v `pwd`/home:/home/jovyan \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     -p $port:8080 \
