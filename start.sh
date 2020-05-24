@@ -53,6 +53,7 @@ fi
 echo "starting container"
 #--network host \
 docker run \
+    --name $group_id.$TASK_ID \
     --restart=always \
     -v `pwd`/home:/home/jovyan \
     -v `pwd`/config.json:/home/jovyan/config.json \
