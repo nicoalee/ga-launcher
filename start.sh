@@ -50,12 +50,11 @@ if [ -d /mnt/secondary/$group_id ]; then
     input_mount="-v /mnt/secondary/$group_id:/home/jovyan/input:ro"
 fi
 
-#-v `pwd`/home:/home/jovyan \
-
 echo "starting container"
 #--network host \
 docker run \
     --restart=always \
+    -v `pwd`/home:/home/jovyan \
     $input_mount \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     -p $port:8080 \
