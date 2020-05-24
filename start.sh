@@ -55,6 +55,7 @@ echo "starting container"
 docker run \
     --restart=always \
     -v `pwd`/home:/home/jovyan \
+    -v `pwd`/config.json:/home/jovyan/config.json \
     $input_mount \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     -p $port:8080 \
