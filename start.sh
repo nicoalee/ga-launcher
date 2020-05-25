@@ -9,7 +9,10 @@ container=$(jq -r .container config.json)
 #validate container name
 case "$container" in
 jupyter/*)
-    echo "accepted"
+    echo "accepted.. jupyter container"
+    ;;
+brainlife/*)
+    echo "accepted.. brainlife container"
     ;;
 *)
     echo "invalid container"
@@ -50,10 +53,13 @@ if [ -d /mnt/secondary/$group_id ]; then
     input_mount="-v /mnt/secondary/$group_id:/home/jovyan/input:ro"
 fi
 
+name=$group_id.$TASK_ID
+docker rm -f $name || true
+
 echo "starting container"
 #--network host \
 docker run \
-    --name $group_id.$TASK_ID \
+    --name $name \
     --restart=always \
     -v `pwd`/home:/home/jovyan \
     -v `pwd`/config.json:/home/jovyan/config.json \
