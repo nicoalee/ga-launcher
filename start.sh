@@ -86,6 +86,8 @@ docker run \
     $input_mount \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     -p $port:8080 \
+    --memory=16g \
+    --cpus=4 \
     -d $container > container.id
 
 cat <<EOF > container.json
