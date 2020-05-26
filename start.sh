@@ -1,7 +1,18 @@
 #!/bin/bash
 
 set -e
-set -x
+
+#I need to point to the right api server based on the environment we are in
+host=brainlife.io
+[ $HOSTNAME == "dev1.soichi.us" ] && host=dev1.soichi.us
+[ $HOSTNAME == "test.brainlife.io" ] && host=test.brainlife.io
+
+host=$(hostname)
+if [ ! -f ~/.config/$host/.jwt ]; then
+    echo "please run bl login"
+    exit 1
+fi
+jwt=$(cat ~/.config/$host/.jwt)
 
 group_id=$(jq -r .group config.json)
 container=$(jq -r .container config.json)
@@ -47,6 +58,15 @@ EOF
 
 mkdir -p home
 chmod 777 home
+cp .bashrc home/
+
+projectid=$(jq -r .project._id config.json)
+
+echo "load input.json"
+curl "https://$host/api/warehouse/secondary/list/$projectid" -H "Authorization: Bearer $jwt" > home/inputs.json
+
+echo "load participants.json"
+curl "https://$host/api/warehouse/participant/$projectid" -H "Authorization: Bearer $jwt" > home/participants.json
 
 input_mount=""
 if [ -d /mnt/secondary/$group_id ]; then

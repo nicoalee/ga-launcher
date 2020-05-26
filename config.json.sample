@@ -1,4 +1,108 @@
 {
 	"group": 759,
-    "container": "jupyter/datascience-notebook:lab-2.1.1"
+    "container": "jupyter/datascience-notebook:lab-2.1.1",
+    "project": {
+        "stats": {
+            "datasets": {
+                "datatypes": [],
+                "datatypes_detail": []
+            },
+            "instances": {
+                "requested": 0,
+                "running": 5,
+                "failed": 0,
+                "finished": 15,
+                "stopped": 0
+            },
+            "rules": {
+                "active": 1,
+                "inactive": 0
+            },
+            "resources": [
+                {
+                    "_id": "5ecae92c50c7c1775a99999d",
+                    "service": "brainlife/app-archive-secondary",
+                    "resource_id": "59ea931df82bb308c0197c3d",
+                    "name": "Archiver",
+                    "desc": "used to interface with wrangler archive. should not enable any other app, and should only be enabled for warehouse group (with warehouse psudo user as member)",
+                    "count": 8,
+                    "total_walltime": 892805
+                },
+                {
+                    "_id": "5ecae92c50c7c1775a99999e",
+                    "service": "brainlife/app-stage",
+                    "resource_id": "5e8e87345b188b245b4d34fc",
+                    "name": "Stager",
+                    "desc": "A resource used for data staging. The server is hosted on the Jetstream and access wrangler through NFS client. 6 threads seems to be max that 6 core wrangler nfs server can handle (secondary: primary: 149.165.156.63 wranger2:149.165.169.130). I had it set to 8 and it killed the primary.. maybe something was wrong with the network?\n\nWith the use of ratermount / autofs, app-stage no longer need to untar anything.. but if the data comes from elsewhere, it still needs to use bl dataset download, etc.. ",
+                    "count": 22,
+                    "total_walltime": 324084
+                },
+                {
+                    "_id": "5ecae92c50c7c1775a99999f",
+                    "service": "brainlife/app-freesurfer",
+                    "resource_id": "5dc37e2679401a5d0ae34a55",
+                    "name": "hayashis@bigred3",
+                    "desc": "",
+                    "count": 26,
+                    "total_walltime": 288189668
+                },
+                {
+                    "_id": "5ecae92c50c7c1775a9999a0",
+                    "service": "brainlife/app-freesurfer",
+                    "resource_id": "594c4d88cec9aa163acb9264",
+                    "name": "hayashis@carbonate",
+                    "desc": "Here is description for carbonate.",
+                    "citation": "This research was supported in part by Lilly Endowment, Inc., through its support for the Indiana University Pervasive Technology Institute, and in part by the Indiana METACyt Initiative. The Indiana METACyt Initiative at IU was also supported in part by Lilly Endowment, Inc.",
+                    "count": 5,
+                    "total_walltime": 0
+                },
+                {
+                    "_id": "5ecae92c50c7c1775a9999a1",
+                    "service": "brainlife/app-archive",
+                    "resource_id": "59ea931df82bb308c0197c3d",
+                    "name": "Archiver",
+                    "desc": "used to interface with wrangler archive. should not enable any other app, and should only be enabled for warehouse group (with warehouse psudo user as member)",
+                    "count": 14,
+                    "total_walltime": 2072006
+                },
+                {
+                    "_id": "5ecae92c50c7c1775a9999a2",
+                    "service": "brainlife/validator-neuro-freesurfer",
+                    "resource_id": "5dc37e2679401a5d0ae34a55",
+                    "name": "hayashis@bigred3",
+                    "desc": "",
+                    "count": 8,
+                    "total_walltime": 2345885
+                },
+                {
+                    "_id": "5ecae92c50c7c1775a9999a3",
+                    "service": "brainlife/ga-launcher",
+                    "resource_id": "5ec83e5c73bcb837318493d5",
+                    "name": "GroupAnalysis",
+                    "desc": "GroupAnalysis cluster to run group analysis containers",
+                    "count": 3,
+                    "total_walltime": 0
+                }
+            ],
+            "publications": 0
+        },
+        "admins": [
+            "1"
+        ],
+        "members": [],
+        "guests": [],
+        "tags": [],
+        "access": "private",
+        "listed": false,
+        "quota": 1000000000000,
+        "removed": false,
+        "_id": "5ec9e65269df82555e197749",
+        "name": "Female action video game players.",
+        "desc": "Imported from OpenNeuroDatasets/ds000253",
+        "user_id": "1",
+        "agreements": [],
+        "create_date": "2020-05-24T03:13:22.456Z",
+        "group_id": 776,
+        "__v": 0
+    }
 }
