@@ -79,8 +79,8 @@ set -x #debug..
 name=$group_id.$TASK_ID
 docker rm -f $name || true
 
-echo "starting container"
-#--network host \
+echo "starting container - might take a while for the first time"
+$(
 docker run \
     --name $name \
     --restart=always \
@@ -100,5 +100,5 @@ cat <<EOF > container.json
     "token": "$token"
 }
 EOF
-
+) &
 
