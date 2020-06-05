@@ -5,7 +5,8 @@ set -e
 #I need to point to the right api server based on the environment we are in
 host=brainlife.io
 [ $HOSTNAME == "dev1.soichi.us" ] && host=dev1.soichi.us
-[ $HOSTNAME == "test.brainlife.io" ] && host=test.brainlife.io
+[ $HOSTNAME == "ga-test" ] && host=test.brainlife.io
+[ $HOSTNAME == "ga" ] && host=brainlife.io
 
 host=$(hostname)
 if [ ! -f ~/.config/$host/.jwt ]; then
