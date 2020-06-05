@@ -74,13 +74,20 @@ if [ -d /mnt/secondary/$group_id ]; then
     input_mount="-v /mnt/secondary/$group_id:/home/jovyan/input:ro"
 fi
 
-set -x #debug..
+#set -x #debug..
+
+#for ui
+cat <<EOF > container.json
+{
+    "port": $port,
+    "token": "$token"
+}
+EOF
 
 name=$group_id.$TASK_ID
 docker rm -f $name || true
 
 echo "starting container - might take a while for the first time"
-$(
 docker run \
     --name $name \
     --restart=always \
@@ -91,14 +98,4 @@ docker run \
     -p $port:8080 \
     --memory=16g \
     --cpus=4 \
-    -d $container > container.id
-
-cat <<EOF > container.json
-{
-    "id": "$(cat container.id)",
-    "port": $port,
-    "token": "$token"
-}
-EOF
-) &
-
+    -d $container > container.id &
