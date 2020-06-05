@@ -74,6 +74,8 @@ if [ -d /mnt/secondary/$group_id ]; then
     input_mount="-v /mnt/secondary/$group_id:/home/jovyan/input:ro"
 fi
 
+set -x #debug..
+
 name=$group_id.$TASK_ID
 docker rm -f $name || true
 
