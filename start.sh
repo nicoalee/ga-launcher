@@ -7,7 +7,6 @@ host=brainlife.io
 [ $HOSTNAME == "dev1.soichi.us" ] && host=dev1.soichi.us
 [ $HOSTNAME == "ga-test" ] && host=test.brainlife.io
 
-host=$(hostname)
 #if [ ! -f ~/.config/$host/.jwt ]; then
 #    echo "please run bl login"
 #    exit 1
