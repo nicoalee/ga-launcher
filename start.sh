@@ -8,11 +8,13 @@ host=brainlife.io
 [ $HOSTNAME == "test.brainlife.io" ] && host=test.brainlife.io
 
 host=$(hostname)
-if [ ! -f ~/.config/$host/.jwt ]; then
-    echo "please run bl login"
-    exit 1
-fi
-jwt=$(cat ~/.config/$host/.jwt)
+#if [ ! -f ~/.config/$host/.jwt ]; then
+#    echo "please run bl login"
+#    exit 1
+#fi
+#jwt=$(cat ~/.config/$host/.jwt)
+
+jwt=$(cat $WAREHOUSE_JWT)
 
 group_id=$(jq -r .group config.json)
 container=$(jq -r .container config.json)
