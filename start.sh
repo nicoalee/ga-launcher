@@ -6,7 +6,6 @@ set -e
 host=brainlife.io
 [ $HOSTNAME == "dev1.soichi.us" ] && host=dev1.soichi.us
 [ $HOSTNAME == "ga-test" ] && host=test.brainlife.io
-[ $HOSTNAME == "ga" ] && host=brainlife.io
 
 host=$(hostname)
 if [ ! -f ~/.config/$host/.jwt ]; then
