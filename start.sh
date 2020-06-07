@@ -99,3 +99,9 @@ docker run \
     --memory=16g \
     --cpus=4 \
     -d $container > container.id &
+
+
+while [ ! -s container.id ]; do
+    echo "waiting for container.id"
+    sleep 1
+done
