@@ -6,8 +6,13 @@
 #return code 3 = unknown (retry later)
 
 if [ ! -f container.id ]; then
-    echo "container not yet started?"
-    exit 3
+    if [ -f pull.log ]; then
+	    echo "pulling container"
+	    exit 0
+    else
+	    echo "container fail to start?"
+	    exit 3
+    fi
 fi
 
 id=$(cat container.id)

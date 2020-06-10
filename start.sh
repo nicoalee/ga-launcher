@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -f pull.log
+
 set -e
 
 #I need to point to the right api server based on the environment we are in
@@ -88,7 +90,7 @@ name=$group_id.$TASK_ID
 docker rm -f $name || true
 
 echo "starting container - might take a while for the first time"
-docker run \
+nohup docker run \
     --name $name \
     --restart=always \
     -v `pwd`/home:/home/jovyan \
@@ -98,10 +100,9 @@ docker run \
     -p $port:8080 \
     --memory=16g \
     --cpus=4 \
-    -d $container > container.id &
+    -d $container > container.id 2> pull.log &
 
-
-while [ ! -s container.id ]; do
-    echo "waiting for container.id"
-    sleep 1
-done
+#while [ ! -s container.id ]; do
+#    echo "waiting for container.id"
+#    sleep 1
+#done
