@@ -5,9 +5,9 @@
 #return code 2 = failed
 #return code 3 = unknown (retry later)
 
-if [ ! -f container.id ]; then
+if [ ! -s container.id ]; then
     if [ -f pull.log ]; then
-	    echo "pulling container"
+	    tail -1 pull.log
 	    exit 0
     else
 	    echo "container fail to start?"
