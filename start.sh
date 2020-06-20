@@ -9,13 +9,7 @@ host=brainlife.io
 [ $HOSTNAME == "dev1.soichi.us" ] && host=dev1.soichi.us
 [ $HOSTNAME == "ga-test" ] && host=test.brainlife.io
 
-#if [ ! -f ~/.config/$host/.jwt ]; then
-#    echo "please run bl login"
-#    exit 1
-#fi
-#jwt=$(cat ~/.config/$host/.jwt)
-
-jwt=$(cat $WAREHOUSE_JWT)
+#jwt=$(cat $WAREHOUSE_JWT)
 
 group_id=$(jq -r .group config.json)
 container=$(jq -r .container config.json)
@@ -65,11 +59,11 @@ cp .bashrc home/
 
 projectid=$(jq -r .project._id config.json)
 
-echo "load input.json"
-curl "https://$host/api/warehouse/secondary/list/$projectid" -H "Authorization: Bearer $jwt" > home/inputs.json
+#echo "load input.json"
+#curl "https://$host/api/warehouse/secondary/list/$projectid" -H "Authorization: Bearer $jwt" > home/inputs.json
 
-echo "load participants.json"
-curl "https://$host/api/warehouse/participant/$projectid" -H "Authorization: Bearer $jwt" > home/participants.json
+#echo "load participants.json"
+#curl "https://$host/api/warehouse/participant/$projectid" -H "Authorization: Bearer $jwt" > home/participants.json
 
 input_mount=""
 if [ -d /mnt/secondary/$group_id ]; then
@@ -102,7 +96,3 @@ nohup docker run \
     --cpus=4 \
     -d $container > container.id 2> pull.log &
 
-#while [ ! -s container.id ]; do
-#    echo "waiting for container.id"
-#    sleep 1
-#done
