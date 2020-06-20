@@ -21,7 +21,7 @@ if [ $? -eq 0 ]; then
 
     #wait for the port to start
     port=$(jq .port container.json)
-    curl -f http://localhost:$port
+    curl -sf http://localhost:$port
     if [ $? -eq 7 ]; then
         echo "waiting for port to open"
         exit 0
