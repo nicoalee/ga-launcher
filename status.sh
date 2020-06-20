@@ -18,6 +18,15 @@ fi
 id=$(cat container.id)
 docker inspect $id > inspect.json
 if [ $? -eq 0 ]; then
+
+    #wait for the port to start
+    port=$(jq .port container.json)
+    curl -f http://localhost:$port
+    if [ $? -eq 7 ]; then
+        echo "waiting for port to open"
+        exit 0
+    fi
+
     echo "running"
     exit 0 #running
 else
