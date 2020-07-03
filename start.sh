@@ -45,11 +45,11 @@ c.NotebookApp.token = '$token'
 # https://github.com/jupyter/notebook/issues/3130
 #c.FileContentsManager.delete_to_trash = False
 
-c.NotebookApp.tornado_settings = {
-  'headers': {
-        #'Content-Security-Policy': "frame-ancestors self http://localhost:8080 https://dev1.soichi.us https://brainlife.io https://test.brainlife.io",
-  }
-}
+#c.NotebookApp.tornado_settings = {
+#  'headers': {
+#        'Content-Security-Policy': "frame-ancestors self http://localhost:8080 https://dev1.soichi.us https://brainlife.io https://test.brainlife.io"
+#  }
+#}
 EOF
 
 mkdir -p home
