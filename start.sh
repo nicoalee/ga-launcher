@@ -47,10 +47,7 @@ c.NotebookApp.token = '$token'
 
 c.NotebookApp.tornado_settings = {
   'headers': {
-        #'Content-Security-Policy': "frame-ancestors *"
-        'Content-Security-Policy': "frame-ancestors self http://localhost:8080 https://dev1.soichi.us https://brainlife.io https://test.brainlife.io",
-        'Access-Control-Allow-Origin': "*",
-        'Access-Control-Allow-Methods': "GET, POST, OPTIONS"
+        #'Content-Security-Policy': "frame-ancestors self http://localhost:8080 https://dev1.soichi.us https://brainlife.io https://test.brainlife.io",
   }
 }
 EOF
