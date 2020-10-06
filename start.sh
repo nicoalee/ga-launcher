@@ -53,6 +53,15 @@ c.NotebookApp.tornado_settings = {
         'Content-Security-Policy': "frame-ancestors self http://localhost:8080 https://dev1.soichi.us https://brainlife.io https://test.brainlife.io"
   }
 }
+
+# TODO - we need to secure by generated token for each jupyterhub instance, but also with token from brainlife jwt as specific user
+# The secrect key used to generate the given token
+#c.JSONWebTokenAuthenticator.secret = '$JWT_PUBLIC_KEY'
+#c.JSONWebTokenAuthenticator.username_claim_field = 'sub'
+#c.JSONWebTokenAuthenticator.expected_audience = '$JWT_ISSUER'
+#
+# This will enable local user creation upon authentication, requires JSONWebTokenLocalAuthenticator
+##c.JSONWebLocalTokenAuthenticator.create_system_users = True                       
 EOF
 
 mkdir -p home
@@ -61,18 +70,10 @@ cp .bashrc home/
 
 projectid=$(jq -r .project._id config.json)
 
-#echo "load input.json"
-#curl "https://$host/api/warehouse/secondary/list/$projectid" -H "Authorization: Bearer $jwt" > home/inputs.json
-
-#echo "load participants.json"
-#curl "https://$host/api/warehouse/participant/$projectid" -H "Authorization: Bearer $jwt" > home/participants.json
-
 input_mount=""
 if [ -d /mnt/secondary/$group_id ]; then
     input_mount="-v /mnt/secondary/$group_id:/home/jovyan/input:ro"
 fi
-
-#set -x #debug..
 
 #for ui
 cat <<EOF > container.json

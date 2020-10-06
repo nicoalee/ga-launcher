@@ -21,15 +21,15 @@ if [ $? -eq 0 ]; then
 
     #client also needs to wait for nginx to proxy through..
     #wait for the port to start
-    #port=$(jq .port container.json)
-    #curl -sf http://localhost:$port
-    #if [ $? -eq 7 ]; then
-    #    echo "waiting for port to open"
-    #    exit 0
-    #fi
-
-    echo "running"
-    exit 0 #running
+    port=$(jq .port container.json)
+    curl -sf $URL_PREFIX/$port/
+    if [ $? -eq 0 ]; then
+	echo "running"
+	exit 0
+    else
+        echo "waiting for port to open"
+        exit 0
+    fi
 else
     echo "not running"
     exit 2 #disappeared?
