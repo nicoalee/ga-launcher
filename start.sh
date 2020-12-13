@@ -72,7 +72,7 @@ projectid=$(jq -r .project._id config.json)
 
 input_mount=""
 if [ -d /mnt/secondary/$group_id ]; then
-    input_mount="-v /mnt/secondary/$group_id:/home/jovyan/input:ro"
+    input_mount="-v /mnt/secondary/$group_id:/home/jovyan/input:ro,shared"
 fi
 
 #for ui
@@ -86,12 +86,15 @@ EOF
 name=$group_id.$TASK_ID
 docker rm -f $name || true
 
+echo "git clone notebook requested"
+git clone git@github.com:soichih/ga-test.git home/app
+
 echo "starting container - might take a while for the first time"
 nohup docker run \
     --name $name \
     --restart=always \
-    -v `pwd`/home:/home/jovyan \
-    -v `pwd`/config.json:/home/jovyan/config.json \
+    -v `pwd`/home:/home/brlife \
+    -v `pwd`/config.json:/home/brlife/config.json \
     $input_mount \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     -p $port:8080 \
