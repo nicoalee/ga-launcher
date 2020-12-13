@@ -100,5 +100,6 @@ nohup docker run \
     -p $port:8080 \
     --memory=16g \
     --cpus=4 \
+    -u brlife \
     -d $container > container.id 2> pull.log &
 
