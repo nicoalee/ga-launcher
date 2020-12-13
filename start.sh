@@ -87,7 +87,7 @@ name=$group_id.$TASK_ID
 docker rm -f $name || true
 
 echo "git clone notebook requested"
-git clone git@github.com:soichih/ga-test.git home/app
+git clone https://github.com/soichih/ga-test.git home/app
 
 echo "starting container - might take a while for the first time"
 nohup docker run \
