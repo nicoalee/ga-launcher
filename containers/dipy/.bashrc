@@ -64,4 +64,6 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+echo "The notebook is in /notebook"
+echo "The input files are in /input"
 

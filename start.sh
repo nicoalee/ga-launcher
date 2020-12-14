@@ -67,7 +67,8 @@ EOF
 
 echo "git clone notebook requested as home"
 git clone https://github.com/soichih/ga-test.git notebook
-chown -R 1001:1001 notebook #make it accessible by jovyan
+ln -s /input notebook/input
+chown -R 1000:1000 notebook #make it accessible by jovyan
 
 #inject config.json to notebook incase user needs it
 cp config.json notebook
@@ -97,9 +98,9 @@ echo "starting container - might take a while for the first time"
 nohup docker run \
     --name $name \
     --restart=always \
-    $input_mount \
     -v `pwd`/notebook:/notebook \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
+    $input_mount \
     -p $port:8080 \
     --memory=16g \
     --cpus=4 \
