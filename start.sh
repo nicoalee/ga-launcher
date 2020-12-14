@@ -98,13 +98,15 @@ echo "starting container - might take a while for the first time"
 nohup docker run \
     --name $name \
     --restart=always \
+    -v /etc/passwd:/etc/passwd \
+    -v /etc/group:/etc/group \
     -v `pwd`/notebook:/notebook \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     $input_mount \
     -p $port:8080 \
     --memory=16g \
     --cpus=4 \
-    -u $UID \
+    -u $USER \
     -d $container > container.id 2> pull.log &
 
 
