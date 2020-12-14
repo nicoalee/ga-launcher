@@ -41,7 +41,7 @@ c.NotebookApp.ip = '0.0.0.0'
 c.NotebookApp.port = 8080
 c.NotebookApp.open_browser = False
 c.NotebookApp.token = '$token'
-c.NotebookApp.notebook dir = '/notebook'
+c.NotebookApp.notebook.dir = '/notebook'
 
 # https://github.com/jupyter/notebook/issues/3130
 #c.FileContentsManager.delete_to_trash = False
@@ -95,7 +95,7 @@ nohup docker run \
     --restart=always \
     $input_mount \
     -v `pwd`/notebook:/notebook \
-    -v `pwd`/config.json:/home/brlife/config.json \
+    -v `pwd`/config.json:/notebook/config.json \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     -p $port:8080 \
     --memory=16g \
