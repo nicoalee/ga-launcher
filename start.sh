@@ -68,7 +68,7 @@ EOF
 echo "git clone notebook requested as home"
 git clone https://github.com/soichih/ga-test.git notebook
 ln -s /input notebook/input
-chown -R 1000:1000 notebook #make it accessible by jovyan
+#chown -R $UID:1000 notebook #make it accessible by jovyan
 
 #inject config.json to notebook incase user needs it
 cp config.json notebook
@@ -104,7 +104,7 @@ nohup docker run \
     -p $port:8080 \
     --memory=16g \
     --cpus=4 \
+    -u $UID \
     -d $container > container.id 2> pull.log &
 
-#-u brlife \
 
