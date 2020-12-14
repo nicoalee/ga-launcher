@@ -41,7 +41,7 @@ c.NotebookApp.ip = '0.0.0.0'
 c.NotebookApp.port = 8080
 c.NotebookApp.open_browser = False
 c.NotebookApp.token = '$token'
-c.NotebookApp.notebook.dir = '/notebook'
+c.NotebookApp.notebook_dir = '/notebook'
 
 # https://github.com/jupyter/notebook/issues/3130
 #c.FileContentsManager.delete_to_trash = False
@@ -67,11 +67,15 @@ EOF
 
 echo "git clone notebook requested as home"
 git clone https://github.com/soichih/ga-test.git notebook
+chown -R 1001:1001 /notebook
+
+#inject config.json to notebook incase user needs it
+cp config.json notebook
 
 #chmod 777 home #I think we do this so jovyan user can access it?
 #cp .bashrc home/
 
-projectid=$(jq -r .project._id config.json)
+#projectid=$(jq -r .project._id config.json)
 
 input_mount=""
 if [ -d /mnt/secondary/$group_id ]; then
@@ -95,7 +99,6 @@ nohup docker run \
     --restart=always \
     $input_mount \
     -v `pwd`/notebook:/notebook \
-    -v `pwd`/config.json:/notebook/config.json \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     -p $port:8080 \
     --memory=16g \
