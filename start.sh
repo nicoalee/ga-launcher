@@ -41,6 +41,7 @@ c.NotebookApp.ip = '0.0.0.0'
 c.NotebookApp.port = 8080
 c.NotebookApp.open_browser = False
 c.NotebookApp.token = '$token'
+c.NotebookApp.notebook dir = '/notebook'
 
 # https://github.com/jupyter/notebook/issues/3130
 #c.FileContentsManager.delete_to_trash = False
@@ -65,17 +66,16 @@ c.NotebookApp.tornado_settings = {
 EOF
 
 echo "git clone notebook requested as home"
-git clone https://github.com/soichih/ga-test.git home
+git clone https://github.com/soichih/ga-test.git notebook
 
-chmod 777 home #I think we do this so jovyan user can access it?
-
-cp .bashrc home/
+#chmod 777 home #I think we do this so jovyan user can access it?
+#cp .bashrc home/
 
 projectid=$(jq -r .project._id config.json)
 
 input_mount=""
 if [ -d /mnt/secondary/$group_id ]; then
-    input_mount="-v /mnt/secondary/$group_id:/home/jovyan/input:ro,shared"
+    input_mount="-v /mnt/secondary/$group_id:/input:ro,shared"
 fi
 
 #for ui
@@ -89,14 +89,13 @@ EOF
 name=$group_id.$TASK_ID
 docker rm -f $name || true
 
-
 echo "starting container - might take a while for the first time"
 nohup docker run \
     --name $name \
     --restart=always \
-    -v `pwd`/home:/home/brlife \
-    -v `pwd`/config.json:/home/brlife/config.json \
     $input_mount \
+    -v `pwd`/notebook:/notebook \
+    -v `pwd`/config.json:/home/brlife/config.json \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     -p $port:8080 \
     --memory=16g \
