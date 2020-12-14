@@ -70,6 +70,11 @@ git clone https://github.com/soichih/ga-test.git notebook
 ln -s /input notebook/input
 #chown -R $UID:1000 notebook #make it accessible by jovyan
 
+#the internal user jovyan(1000) needs to have access to notebook directory created here
+#maybe I should do this internally so ID will match? 
+#or maybe use docker image container?
+chmod -R 777 notebook 
+
 #inject config.json to notebook incase user needs it
 cp config.json notebook
 
@@ -106,7 +111,7 @@ nohup docker run \
     -p $port:8080 \
     --memory=16g \
     --cpus=4 \
-    -u $USER \
     -d $container > container.id 2> pull.log &
+#-u brainlife \
 
 
