@@ -67,7 +67,7 @@ EOF
 
 echo "git clone notebook requested as home"
 git clone https://github.com/soichih/ga-test.git notebook
-chown -R 1001:1001 /notebook
+chown -R 1001:1001 notebook #make it accessible by jovyan
 
 #inject config.json to notebook incase user needs it
 cp config.json notebook
