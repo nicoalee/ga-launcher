@@ -64,8 +64,11 @@ c.NotebookApp.tornado_settings = {
 ##c.JSONWebLocalTokenAuthenticator.create_system_users = True                       
 EOF
 
-mkdir -p home
-chmod 777 home
+echo "git clone notebook requested as home"
+git clone https://github.com/soichih/ga-test.git home
+
+chmod 777 home #I think we do this so jovyan user can access it?
+
 cp .bashrc home/
 
 projectid=$(jq -r .project._id config.json)
@@ -86,8 +89,6 @@ EOF
 name=$group_id.$TASK_ID
 docker rm -f $name || true
 
-echo "git clone notebook requested"
-git clone https://github.com/soichih/ga-test.git home/app
 
 echo "starting container - might take a while for the first time"
 nohup docker run \
