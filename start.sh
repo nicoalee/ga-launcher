@@ -12,6 +12,7 @@ host=brainlife.io
 #jwt=$(cat $WAREHOUSE_JWT)
 
 group_id=$(jq -r .group config.json)
+notebook=$(jq -r .notebook config.json)
 container=$(jq -r .container config.json)
 
 #validate container name
@@ -65,18 +66,21 @@ c.NotebookApp.tornado_settings = {
 ##c.JSONWebLocalTokenAuthenticator.create_system_users = True                       
 EOF
 
-echo "git clone notebook requested as home"
-git clone https://github.com/soichih/ga-test.git notebook
-ln -s /input notebook/input
-#chown -R $UID:1000 notebook #make it accessible by jovyan
+#TODO - what if user really wants to reinstall the notebook?
+if [ ! -d notebook ]; then
+  echo "git clone requested notebook($notebook) as /notebook"
+  git clone https://github.com/soichih/ga-test.git notebook
+  ln -s /input notebook/input
+  #chown -R $UID:1000 notebook #make it accessible by jovyan
 
-#the internal user jovyan(1000) needs to have access to notebook directory created here
-#maybe I should do this internally so ID will match? 
-#or maybe use docker image container?
-chmod -R 777 notebook 
+  #the internal user jovyan(1000) needs to have access to notebook directory created here
+  #maybe I should do this internally so ID will match? 
+  #or maybe use docker image container?
+  chmod -R 777 notebook 
 
-#inject config.json to notebook incase user needs it
-cp config.json notebook
+  #inject config.json to notebook incase user needs it
+  cp config.json notebook
+fi
 
 #chmod 777 home #I think we do this so jovyan user can access it?
 #cp .bashrc home/
@@ -103,8 +107,6 @@ echo "starting container - might take a while for the first time"
 nohup docker run \
     --name $name \
     --restart=always \
-    -v /etc/passwd:/etc/passwd \
-    -v /etc/group:/etc/group \
     -v `pwd`/notebook:/notebook \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
     $input_mount \
@@ -112,6 +114,8 @@ nohup docker run \
     --memory=16g \
     --cpus=4 \
     -d $container > container.id 2> pull.log &
+#-v /etc/passwd:/etc/passwd \
+#-v /etc/group:/etc/group \
 #-u brainlife \
 
 
