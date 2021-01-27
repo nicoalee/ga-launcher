@@ -14,6 +14,7 @@ host=brainlife.io
 group_id=$(jq -r .group config.json)
 notebook=$(jq -r .notebook config.json)
 container=$(jq -r .container config.json)
+app=$(jq -r .app config.json)
 
 #validate container name
 case "$container" in
@@ -69,7 +70,7 @@ EOF
 #TODO - what if user really wants to reinstall the notebook?
 if [ ! -d notebook ]; then
   echo "git clone requested notebook($notebook) as /notebook"
-  git clone https://github.com/soichih/ga-test.git notebook
+  git clone https://github.com/$app.git notebook
   ln -s /input notebook/input
   #chown -R $UID:1000 notebook #make it accessible by jovyan
 
