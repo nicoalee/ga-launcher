@@ -15,6 +15,7 @@ group_id=$(jq -r .group config.json)
 notebook=$(jq -r .notebook config.json)
 container=$(jq -r .container config.json)
 app=$(jq -r .app config.json)
+project_id=$(jq -r .project._id config.json)
 
 #validate container name
 case "$container" in
@@ -86,8 +87,6 @@ fi
 #chmod 777 home #I think we do this so jovyan user can access it?
 #cp .bashrc home/
 
-#projectid=$(jq -r .project._id config.json)
-
 input_mount=""
 if [ -d /mnt/secondary/$group_id ]; then
     input_mount="-v /mnt/secondary/$group_id:/input:ro,shared"
@@ -110,6 +109,7 @@ nohup docker run \
     --restart=always \
     -v `pwd`/notebook:/notebook \
     -v `pwd`/jupyter_notebook_config.py:/etc/jupyter/jupyter_notebook_config.py \
+    -e PROJECT_ID=$project_id \
     $input_mount \
     -p $port:8080 \
     --memory=16g \
