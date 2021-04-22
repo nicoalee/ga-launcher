@@ -89,7 +89,7 @@ if [ ! -d notebook ]; then
       ln -s $notebook notebook
   fi
 
-  ln -s /input notebook/input
+  #ln -s /input notebook/input
 
   #the internal user jovyan(1000) needs to have access to notebook directory created here
   #maybe I should do this internally so ID will match? 
@@ -105,7 +105,7 @@ fi
 
 input_mount=""
 if [ -d /mnt/secondary/$group_id ]; then
-    input_mount="-v /mnt/secondary/$group_id:/input:ro,shared"
+    input_mount="-v /mnt/secondary/$group_id:/input:ro,shared -v /mnt/secondary/$group_id:/notebook/input:ro,shared"
 fi
 
 #for ui
@@ -115,6 +115,8 @@ cat <<EOF > container.json
     "token": "$token"
 }
 EOF
+
+[ -z $TASK_ID ] && TASK_ID="debug"
 
 name=$group_id.$TASK_ID
 docker rm -f $name || true
