@@ -81,14 +81,15 @@ if [ ! -d notebook ]; then
   if [ "$app" != "null" ]; then
       echo "git cloning requested app"
       git clone https://github.com/$app.git notebook
-      ln -s /input notebook/input
   fi
   #chown -R $UID:1000 notebook #make it accessible by jovyan
 
   if [ "$notebook" != "null" ]; then
       echo "linking staged notebook"
-      ln -s /input $notebook
+      ln -s $notebook notebook
   fi
+
+  ln -s /input notebook/input
 
   #the internal user jovyan(1000) needs to have access to notebook directory created here
   #maybe I should do this internally so ID will match? 
