@@ -12,9 +12,15 @@ host=brainlife.io
 #jwt=$(cat $WAREHOUSE_JWT)
 
 group_id=$(jq -r .group config.json)
-notebook=$(jq -r .notebook config.json)
+#notebook=$(jq -r .notebook config.json)
 container=$(jq -r .container config.json)
+
+#deprecated
 app=$(jq -r .app config.json)
+
+#path to staged notebook content
+notebook=$(jq -r .notebook config.json)
+
 project_id=$(jq -r .project._id config.json)
 
 #validate container name
@@ -70,10 +76,19 @@ EOF
 
 #TODO - what if user really wants to reinstall the notebook?
 if [ ! -d notebook ]; then
-  echo "git clone requested notebook($notebook) as /notebook"
-  git clone https://github.com/$app.git notebook
-  ln -s /input notebook/input
+
+  #deprecated
+  if [ "$app" != "null" ]; then
+      echo "git cloning requested app"
+      git clone https://github.com/$app.git notebook
+      ln -s /input notebook/input
+  fi
   #chown -R $UID:1000 notebook #make it accessible by jovyan
+
+  if [ "$notebook" != "null" ]; then
+      echo "linking staged notebook"
+      ln -s /input $notebook
+  fi
 
   #the internal user jovyan(1000) needs to have access to notebook directory created here
   #maybe I should do this internally so ID will match? 
