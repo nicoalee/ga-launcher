@@ -85,8 +85,10 @@ if [ ! -d notebook ]; then
   #chown -R $UID:1000 notebook #make it accessible by jovyan
 
   if [ "$notebook" != "null" ]; then
-      echo "linking staged notebook"
-      ln -s $notebook notebook
+      #echo "linking staged notebook"
+      #ln -s $notebook notebook
+      echo "copying staged notebook so we can update it"
+      install -d $notebook notebook
   fi
 
   #ln -s /input notebook/input

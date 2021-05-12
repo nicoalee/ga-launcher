@@ -17,8 +17,12 @@ RUN pip install --upgrade jupyterlab-git
 RUn jupyter labextension install nbdime-jupyterlab
 RUN jupyter labextension install @jupyterlab/git
 
-#RUN jupyter server extension enable --py jupyterlab_git
-#RUN jupyter labextension list
+#matploblib widget
+RUN conda install -c conda-forge nodejs
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplotlib
+
+#plotly?
+RUN jupyter labextension install jupyter-plotly
 
 #for color in the terminal?
 COPY .bashrc /home/jovyan/.bashrc
