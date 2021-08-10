@@ -1,6 +1,7 @@
 #https://hub.docker.com/r/jupyter/datascience-notebook/tags/
-FROM jupyter/datascience-notebook:lab-2.1.1
 #FROM jupyter/datascience-notebook:lab-3.0.9  #can't get jupyterlab-git to work with this version
+#FROM jupyter/datascience-notebook:lab-2.1.1
+FROM jupyter/datascience-notebook:lab-3.0.16
 
 RUN conda install --yes -c conda-forge dipy==1.3.0 fury \
     && jupyter lab build \
@@ -22,7 +23,14 @@ RUN conda install -c conda-forge nodejs
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplotlib
 
 #plotly?
-RUN jupyter labextension install jupyter-plotly
+#RUN jupyter labextension install jupyter-plotly
+
+#RUN pip install jupyter-resource-usage
+RUN jupyter labextension install @jupyter-server/resource-usage
+
+#for plotly https://www.npmjs.com/package/jupyterlab-chart-editor
+RUN jupyter labextension install jupyterlab-chart-editor
+RUN pip install plotly
 
 #for color in the terminal?
 COPY .bashrc /home/jovyan/.bashrc
