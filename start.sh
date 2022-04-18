@@ -9,10 +9,7 @@ host=brainlife.io
 [ $HOSTNAME == "dev1.soichi.us" ] && host=dev1.soichi.us
 [ $HOSTNAME == "ga-test" ] && host=test.brainlife.io
 
-#jwt=$(cat $WAREHOUSE_JWT)
-
 group_id=$(jq -r .group config.json)
-#notebook=$(jq -r .notebook config.json)
 container=$(jq -r .container config.json)
 
 #deprecated
@@ -85,13 +82,10 @@ if [ ! -d notebook ]; then
   #chown -R $UID:1000 notebook #make it accessible by jovyan
 
   if [ "$notebook" != "null" ]; then
-      #echo "linking staged notebook"
-      #ln -s $notebook notebook
-      echo "copying staged notebook so we can update it"
-      install -d $notebook notebook
+    echo "copying staged notebook so we can update it"
+    #install -d $notebook notebook #doesn't work anymore?
+    cp -r $notebook notebook
   fi
-
-  #ln -s /input notebook/input
 
   #the internal user jovyan(1000) needs to have access to notebook directory created here
   #maybe I should do this internally so ID will match? 
@@ -135,8 +129,5 @@ nohup docker run \
     --memory=16g \
     --cpus=4 \
     -d $container > container.id 2> pull.log &
-#-v /etc/passwd:/etc/passwd \
-#-v /etc/group:/etc/group \
-#-u brainlife \
 
 

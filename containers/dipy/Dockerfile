@@ -1,9 +1,10 @@
 #https://hub.docker.com/r/jupyter/datascience-notebook/tags/
 #FROM jupyter/datascience-notebook:lab-3.0.9  #can't get jupyterlab-git to work with this version
-#FROM jupyter/datascience-notebook:lab-2.1.1
-FROM jupyter/datascience-notebook:lab-3.0.16
+FROM jupyter/datascience-notebook:lab-2.1.1
+#FROM jupyter/datascience-notebook:lab-3.0.16
+#FROM jupyter/datascience-notebook:lab-3.2.8
 
-RUN conda install --yes -c conda-forge dipy==1.3.0 fury \
+RUN conda install --yes -c conda-forge dipy==1.4.1 fury \
     && jupyter lab build \
     && conda clean --all -f -y \
     && fix-permissions $CONDA_DIR
