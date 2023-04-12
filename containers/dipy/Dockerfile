@@ -36,7 +36,7 @@ FROM brainlife/ga-python:lab328-dipy141-pybrainlife-1.0
 #RUN pip install igraph
 
 # install pybrainlife module
-RUN pip install --upgrade pybrainlife==1.0.98
+RUN pip install --upgrade pybrainlife==1.0.99
 
 #for color in the terminal?
 #COPY .bashrc /home/jovyan/.bashrc
